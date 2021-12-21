@@ -15,6 +15,7 @@ class MarvelService {
     //метод для трансформации данных из полученного объекта - вычленяем нужные данные в новый объект
     _transformCharacter = (char) => {
         return {
+            id: char.id,
             name: char.name,
             description: char.description ? `${char.description.slice(0, 220)}...` : 'You can learn more information on Homepage or Wiki',
             thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,

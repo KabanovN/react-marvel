@@ -1,4 +1,4 @@
-import { Component } from 'react/cjs/react.development';
+import { Component } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
@@ -17,6 +17,13 @@ class RandomChar extends Component {
 
     componentDidMount() {
         this.updateCharacter();
+    }
+
+    //для отображения спиннера при загрузке
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
     }
 
     //загрузка персонажа
@@ -38,7 +45,7 @@ class RandomChar extends Component {
     //обновление рандомного персонажа
     updateCharacter = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-
+        this.onCharLoading();
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)

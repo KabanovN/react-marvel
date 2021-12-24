@@ -1,4 +1,4 @@
-import { Component } from 'react/cjs/react.development';
+import { Component } from 'react';
 import MarvelService from '../../services/MarvelService';
 import './charList.scss';
 
@@ -39,33 +39,43 @@ class CharList extends Component {
             .catch(this.onErrorMessage);    
     }
 
-    render() {
-        const {chars, loading, error} = this.state;
-        const listChars = chars.map(char => {
+    renderCharList = (chars) => {
+        const list = chars.map(char => {
             let fitStyle = null;
             if (char.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 fitStyle = {'objectFit': 'contain'};
             }
 
             return (
-                <li className="char__item char__item_selected" key={char.id}>
-                    <img src={char.thumbnail} alt="abyss" style={fitStyle}/>
-                    <div className="char__name">{char.name}</div>
+                <li className="char__item char__item_selected" 
+                    key={char.id}   
+                    onClick={() => this.props.onCharSelected(char.id)}>
+                        <img src={char.thumbnail} alt="abyss" style={fitStyle}/>
+                        <div className="char__name">{char.name}</div>
                 </li>
             )
         })
 
+        return (
+            <ul className="char__grid">
+                {list}
+            </ul>
+        )
+    }
+
+    render() {
+        const {chars, loading, error} = this.state;
+        const charsList = this.renderCharList(chars);
+
         const spinner = loading ? <Spinner/> : null;
         const errorMessage = error ? <ErrorMessage/> : null;
-        const content = !(loading || error) ? listChars : null;
+        const content = !(loading || error) ? charsList : null;
 
         return (
             <div className="char__list">
-                <ul className="char__grid">
-                    {spinner}
-                    {errorMessage}
-                    {content}
-                </ul>
+                {spinner}
+                {errorMessage}
+                {content}
                 <button className="button button__main button__long">
                     <div className="inner">load more</div>
                 </button>

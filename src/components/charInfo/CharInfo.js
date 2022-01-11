@@ -59,11 +59,6 @@ class CharInfo extends Component {
         })
     }
 
-    renderComicsList = (comics) => {
-        let comicsList;
-
-    }
-
     render() {
         const {char, loading, error} = this.state;
 

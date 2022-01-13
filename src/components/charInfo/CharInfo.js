@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -31,7 +32,7 @@ class CharInfo extends Component {
             return;
         }
 
-        this.onCharLoading();
+        this.onCharLoading(); //для отображения спиннера
 
         this.marvelService
             .getCharacter(charId)
@@ -122,6 +123,10 @@ const View = ({char}) => {
             </ul>
         </>
     )
+}
+
+CharInfo.propTypes = {
+    charId: PropTypes.number //проверка на числовой тип пропса charId
 }
 
 export default CharInfo;

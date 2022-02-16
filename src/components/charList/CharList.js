@@ -68,6 +68,7 @@ class CharList extends Component {
                 fitStyle = {'objectFit': 'contain'};
             }
 
+            //применение класса активности на выделенном элементе + возможность выбора через tab
             let itemClass = 'char__item';
             let tabindex;
             if (char.id === this.props.charId) {

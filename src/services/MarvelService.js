@@ -3,11 +3,12 @@ import useHttp from '../hooks/http.hook';
 function useMarvelService() {
     const _apiKey = '43b852b655d1649e827e3c167cb36de9';
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
-    const _baseOffset = 210;
+    const _baseCharOffset = 210;
+    const _baseComicsOffset = 10;
 
     const { request, error, loading, clearError } = useHttp();
 
-    //метод для трансформации данных из полученного объекта - вычленяем нужные данные в новый объект
+    //методы для трансформации данных из полученного объекта - вычленяем нужные данные в новый объект
     const _transformCharacter = (char) => {
         return {
             id: char.id,
@@ -32,7 +33,7 @@ function useMarvelService() {
         };
     };
 
-    const getAllCharacters = async (offset = _baseOffset) => {
+    const getAllCharacters = async (offset = _baseCharOffset) => {
         const res = await request(
             `${_apiBase}characters?limit=9&offset=${offset}&apikey=${_apiKey}`
         );
@@ -46,7 +47,7 @@ function useMarvelService() {
         return _transformCharacter(res.data.results[0]);
     };
 
-    const getComicsList = async (offset = 10) => {
+    const getComicsList = async (offset = _baseComicsOffset) => {
         const res = await request(
             `${_apiBase}comics?limit=8&offset=${offset}&apikey=${_apiKey}`
         );

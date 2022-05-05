@@ -18,11 +18,7 @@ function CharInfo(props) {
             return;
         }
         clearError(); //очистка от возможных ошибок для возможности повторного запроса
-        getCharacter(charId).then(onCharLoaded);
-    };
-
-    const onCharLoaded = (char) => {
-        setChar(char);
+        getCharacter(charId).then((char) => setChar(char));
     };
 
     useEffect(() => {

@@ -23,13 +23,17 @@ function useMarvelService() {
         };
     };
 
-    const _transformComics = (comics) => {
+    const _transformComics = (comic) => {
         return {
-            id: comics.id,
-            title: comics.title,
-            descr: comics.description,
-            img: `${comics.thumbnail.path}.${comics.thumbnail.extension}`,
-            price: comics.prices.price,
+            id: comic.id,
+            title: comic.title,
+            descr: comic.description || 'There is no description',
+            img: `${comic.thumbnail.path}.${comic.thumbnail.extension}`,
+            price: comic.prices.price
+                ? `${comic.prices.price}$`
+                : 'not available',
+            pageCount: comic.pageCount || 'no info about the number of pages',
+            language: comic.textObjects.language || 'en-us',
         };
     };
 
@@ -55,10 +59,16 @@ function useMarvelService() {
         return res.data.results.map(_transformComics);
     };
 
+    const getComic = async (id) => {
+        const res = await request(`${_apiBase}comics/${id}?apikey=${_apiKey}`);
+        return _transformComics(res.data.results[0]);
+    };
+
     return {
         getAllCharacters,
         getCharacter,
         getComicsList,
+        getComic,
         loading,
         error,
         clearError,

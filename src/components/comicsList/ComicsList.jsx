@@ -30,9 +30,9 @@ function ComicsList() {
     };
 
     const renderComicsList = (comics) => {
-        const itemsList = comics.map((item) => {
+        const itemsList = comics.map((item, i) => {
             return (
-                <li className='comics__item' key={item.id}>
+                <li className='comics__item' key={i}>
                     <Link to={`/comics/${item.id}`}>
                         <img
                             src={item.img}

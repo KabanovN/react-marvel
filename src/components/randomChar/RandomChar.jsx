@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/marvelService';
@@ -18,9 +19,9 @@ function RandomChar() {
 
     //обновление рандомного персонажа
     const updateCharacter = () => {
+        clearError(); // очищаем от ошибок
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacter(id).then(onCharLoaded);
-        clearError(); //заранее очищаем от ошибок
     };
 
     useEffect(() => {
@@ -62,20 +63,18 @@ function RandomChar() {
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
 
-    let classesNames = 'randomchar__img';
-    if (
-        thumbnail ===
-        'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
-    ) {
-        classesNames = 'randomchar__img contain';
-    }
+    let imgClassName;
+    thumbnail ===
+    'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
+        ? (imgClassName = 'randomchar__img contain')
+        : (imgClassName = 'randomchar__img');
 
     return (
         <div className='randomchar__block'>
             <img
                 src={thumbnail}
                 alt='Random character'
-                className={classesNames}
+                className={imgClassName}
             />
             <div className='randomchar__info'>
                 <p className='randomchar__name'>{name}</p>

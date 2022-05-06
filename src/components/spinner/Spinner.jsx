@@ -1,4 +1,4 @@
-const Spinner = () => {
+function Spinner() {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -212,6 +212,6 @@ const Spinner = () => {
             </g>
         </svg>
     );
-};
+}
 
 export default Spinner;

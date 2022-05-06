@@ -1,6 +1,6 @@
 import './skeleton.scss';
 
-const Skeleton = () => {
+function Skeleton() {
     return (
         <>
             <p className='char__select'>
@@ -17,6 +17,6 @@ const Skeleton = () => {
             </div>
         </>
     );
-};
+}
 
 export default Skeleton;

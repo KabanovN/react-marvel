@@ -12,14 +12,12 @@ function RandomChar() {
 
     const { getCharacter, loading, error, clearError } = useMarvelService();
 
-    //загрузка персонажа
     const onCharLoaded = (char) => {
         setChar(char);
     };
 
-    //обновление рандомного персонажа
     const updateCharacter = () => {
-        clearError(); // очищаем от ошибок
+        clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacter(id).then(onCharLoaded);
     };
@@ -61,20 +59,20 @@ function RandomChar() {
 }
 
 const View = ({ char }) => {
-    const { name, description, thumbnail, homepage, wiki } = char;
-
-    let imgClassName;
-    thumbnail ===
-    'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
-        ? (imgClassName = 'randomchar__img contain')
-        : (imgClassName = 'randomchar__img');
+    const { name, description, thumbnail = '', homepage, wiki } = char;
 
     return (
         <div className='randomchar__block'>
             <img
                 src={thumbnail}
                 alt='Random character'
-                className={imgClassName}
+                className='randomchar__img'
+                style={{
+                    objectFit:
+                        thumbnail.indexOf('image_not_available') !== -1
+                            ? 'contain'
+                            : 'cover',
+                }}
             />
             <div className='randomchar__info'>
                 <p className='randomchar__name'>{name}</p>

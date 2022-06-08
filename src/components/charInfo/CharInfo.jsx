@@ -18,7 +18,7 @@ function CharInfo(props) {
         if (!charId) {
             return;
         }
-        clearError(); //очистка от возможных ошибок для возможности повторного запроса
+        clearError();
         getCharacter(charId).then((char) => setChar(char));
     };
 
@@ -45,16 +45,6 @@ function CharInfo(props) {
 const View = ({ char }) => {
     const { name, thumbnail, description, wiki, homepage, comics } = char;
 
-    //добавление стиля для 'image not available'
-    let fitStyle = null;
-    if (
-        thumbnail ===
-        'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
-    ) {
-        fitStyle = { objectFit: 'contain' };
-    }
-
-    //рендеринг списка комиксов
     const comicsList = comics
         .map((item, i) => {
             return (
@@ -68,7 +58,16 @@ const View = ({ char }) => {
     return (
         <>
             <div className='char__basics'>
-                <img src={thumbnail} alt={name} style={fitStyle} />
+                <img
+                    src={thumbnail}
+                    alt={name}
+                    style={{
+                        objectFit:
+                            thumbnail.indexOf('image_not_available') !== -1
+                                ? 'contain'
+                                : 'cover',
+                    }}
+                />
                 <div>
                     <div className='char__info-name'>{name}</div>
                     <div className='char__btns'>
